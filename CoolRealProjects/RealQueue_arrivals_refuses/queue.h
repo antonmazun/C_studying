@@ -1,6 +1,6 @@
 #pragma once
 #include <stdbool.h> //boolean type
-#define MAXQUEUE 20
+#define MAXQUEUE 10
 
 typedef struct visitor_s {
     long arrive;
