@@ -10,18 +10,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
    MSG msg;
    WNDCLASSEX wc;
    // Fill windows structure fields.
-   wc.cbSize = sizeof(wc);
-   wc.style = CS_HREDRAW | CS_VREDRAW;
-   wc.lpfnWndProc = WndProc;
-   wc.cbClsExtra = 0;
-   wc.cbWndExtra = 0;
-   wc.hInstance = hInstance;
-   wc.hIcon = LoadIcon(NULL, IDC_ARROW);
-   wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+   wc.cbSize        = sizeof(wc);
+   wc.style         = CS_HREDRAW | CS_VREDRAW;
+   wc.lpfnWndProc   = WndProc;
+   wc.cbClsExtra    = 0;
+   wc.cbWndExtra    = 0;
+   wc.hInstance     = hInstance;
+   wc.hIcon         = LoadIcon(NULL, IDI_HAND);
+   wc.hCursor       = LoadCursor(NULL, IDC_CROSS);
    wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
-   wc.lpszMenuName = NULL;
+   wc.lpszMenuName  = NULL;
    wc.lpszClassName = szClassName;
-   wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
+   wc.hIconSm       = LoadIcon(NULL, IDI_HAND);
    // Register window class.
    if(!RegisterClassEx(&wc))
    {
@@ -32,7 +32,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
    hMainWnd = CreateWindow(
             szClassName,
             "A Hello1 Application",
-            WS_OVERLAPPEDWINDOW,
+            WS_OVERLAPPEDWINDOW | WS_HSCROLL,
             CW_USEDEFAULT,
             0,
             CW_USEDEFAULT,
@@ -47,12 +47,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
       return (0);
    }
    // Showing a window.
-   ShowWindow(hMainWnd, nCmdShow);
+   ShowWindow(hMainWnd, SW_SHOWMAXIMIZED);
    UpdateWindow(hMainWnd);
    // While program runs - translate and dispatch messages
    while(GetMessage(&msg, NULL, 0, 0))
    {
-      TranslateMessage(&msg);
+      TranslateMessage(&msg); // ONLY for keyboard input
       DispatchMessage(&msg);
    }
    return (msg.wParam);
@@ -68,7 +68,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
    {
    case WM_PAINT:
       hDC = BeginPaint(hWnd, &ps);
-      GetClientRect(hWnd, &rect);
+      GetClientRect(hWnd, &rect);\
       DrawText(hDC, "Hello, World!", -1, &rect, DT_SINGLELINE | DT_CENTER | DT_VCENTER);
       EndPaint(hWnd, &ps);
       break;
